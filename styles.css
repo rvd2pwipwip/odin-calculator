@@ -23,6 +23,7 @@
   background-color: beige;
   border: 1px solid darkgray;
   text-align: right;
+  cursor: default;
 }
 
 .btn {
@@ -30,6 +31,12 @@
   align-items: center;
   justify-content: center;
   border: 1px solid darkgray;
+  cursor:pointer;
+}
+
+.operator {
+  background-color: orange;
+  color: white;
 }
 
 .clear {

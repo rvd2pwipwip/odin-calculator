@@ -17,3 +17,14 @@ const operate = (operator, a, b) => {
       break;
   }
 };
+
+let key = '';
+
+const btns = document.querySelectorAll('.btn');
+
+btns.forEach((btn) =>
+  btn.addEventListener('click', (e) => {
+    key = e.target.textContent;
+    console.log({key});
+  })
+);
