@@ -17,6 +17,7 @@ body {
   height: 300px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(4, 1fr);
+  background-color: darkgray;
   border: 6px solid darkgray;
   border-radius: 8px;
   overflow: clip;
@@ -38,6 +39,7 @@ body {
   justify-content: center;
   border: 1px solid darkgray;
   background-color: lightgray;
+  border-radius: 4px;
   cursor: pointer;
 }
 
