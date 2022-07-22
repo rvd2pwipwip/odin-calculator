@@ -5,13 +5,19 @@
   text-align: center;
 }
 
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .body {
   display: grid;
   width: 224px;
   height: 300px;
   grid-template-rows: repeat(6, 1fr);
   grid-template-columns: repeat(4, 1fr);
-  border: 2px solid darkgray;
+  border: 6px solid darkgray;
   border-radius: 8px;
   overflow: clip;
 }
@@ -32,7 +38,7 @@
   justify-content: center;
   border: 1px solid darkgray;
   background-color: lightgray;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .operator {
