@@ -1,7 +1,7 @@
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+// const add = (a, b) => a + b;
+// const subtract = (a, b) => a - b;
+// const multiply = (a, b) => a * b;
+// const divide = (a, b) => a / b;
 
 const operate = (operator, a, b) => {
   switch (operator) {
@@ -19,7 +19,7 @@ const operate = (operator, a, b) => {
 };
 
 const display = document.querySelector('.display');
-display.textContent = null;
+display.textContent = 0;
 const btns = document.querySelectorAll('.btn');
 let key = '';
 let operator = null;
@@ -32,12 +32,21 @@ const init = () => {
   operand1 = null;
   operand2 = null;
   startOperand = false;
-}
+};
 
 const clear = () => {
   init();
-  display.textContent = null;
-}
+  display.textContent = 0;
+};
+
+const del = () => {
+  if (display.textContent.length > 1) {
+    display.textContent = display.textContent.slice(0, -1);
+  } else {
+    display.textContent = 0;
+    startOperand = false;
+  }
+};
 
 btns.forEach((btn) =>
   btn.addEventListener('click', (e) => {
@@ -51,25 +60,29 @@ btns.forEach((btn) =>
       if (e.target.classList.contains('digit')) {
         if (!startOperand) {
           display.textContent = null;
-          startOperand = true
+          startOperand = true;
         }
         display.textContent += key;
       } else if (e.target.classList.contains('operator')) {
         setOperand1();
         startOperand = false;
         setOperator();
+      } else if (e.target.classList.contains('delete')) {
+        del();
       }
     } else if (!operand2) {
       if (e.target.classList.contains('digit')) {
         if (!startOperand) {
           display.textContent = null;
-          startOperand = true
+          startOperand = true;
         }
         display.textContent += key;
       } else if (e.target.classList.contains('equals')) {
         setOperand2();
         display.textContent = operate(operator, operand1, operand2);
         init();
+      } else if (e.target.classList.contains('delete')) {
+        del();
       }
     }
   })
