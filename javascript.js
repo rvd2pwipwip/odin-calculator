@@ -1,8 +1,3 @@
-// const add = (a, b) => a + b;
-// const subtract = (a, b) => a - b;
-// const multiply = (a, b) => a * b;
-// const divide = (a, b) => a / b;
-
 const operate = (operator, a, b) => {
   switch (operator) {
     case 'plus':
@@ -20,7 +15,9 @@ const operate = (operator, a, b) => {
 
 const display = document.querySelector('.display');
 display.textContent = 0;
+
 const btns = document.querySelectorAll('.btn');
+
 let key = '';
 let operator = null;
 let operand1 = null;
@@ -53,7 +50,9 @@ const dot = (e) => {
   if (display.textContent.includes('.')) {
     e.preventDefault();
     e.stopPropagation();
+    return true; // Indicate that the event was handled
   }
+  return false; // Indicate that the event was not handled
 };
 
 btns.forEach((btn) =>
@@ -62,6 +61,7 @@ btns.forEach((btn) =>
 
     if (e.target.classList.contains('clear')) {
       clear();
+      return;
     }
 
     if (result) {
@@ -69,10 +69,13 @@ btns.forEach((btn) =>
         operand1 = result;
         result = operate(operator, operand1, operand2);
         display.textContent = result;
+        return;
       }
+
       if (e.target.classList.contains('delete')) {
         del();
         result = display.textContent;
+        return;
       }
     }
 
@@ -82,9 +85,11 @@ btns.forEach((btn) =>
           display.textContent = null;
           startOperand = true;
         }
+
         if (e.target.classList.contains('dot')) {
-          dot();
+          if (dot(e)) return; // Return early if the dot event was handled
         }
+
         display.textContent += key;
       } else if (e.target.classList.contains('operator')) {
         setOperand1();
@@ -100,6 +105,11 @@ btns.forEach((btn) =>
           display.textContent = null;
           startOperand = true;
         }
+
+        if (e.target.classList.contains('dot')) {
+          if (dot(e)) return; // Return early if the dot event was handled
+        }
+
         display.textContent += key;
       } else if (e.target.classList.contains('equals')) {
         if (!result) {
