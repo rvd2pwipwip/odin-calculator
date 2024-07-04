@@ -26,12 +26,14 @@ let operator = null;
 let operand1 = null;
 let operand2 = null;
 let startOperand = false;
+let result = null;
 
 const init = () => {
   operator = null;
   operand1 = null;
   operand2 = null;
   startOperand = false;
+  result = null;
 };
 
 const clear = () => {
@@ -44,7 +46,13 @@ const del = () => {
     display.textContent = display.textContent.slice(0, -1);
   } else {
     display.textContent = 0;
-    startOperand = false;
+  }
+};
+
+const dot = (e) => {
+  if (display.textContent.includes('.')) {
+    e.preventDefault();
+    e.stopPropagation();
   }
 };
 
@@ -56,11 +64,26 @@ btns.forEach((btn) =>
       clear();
     }
 
+    if (result) {
+      if (e.target.classList.contains('equals')) {
+        operand1 = result;
+        result = operate(operator, operand1, operand2);
+        display.textContent = result;
+      }
+      if (e.target.classList.contains('delete')) {
+        del();
+        result = display.textContent;
+      }
+    }
+
     if (!operand1) {
       if (e.target.classList.contains('digit')) {
         if (!startOperand) {
           display.textContent = null;
           startOperand = true;
+        }
+        if (e.target.classList.contains('dot')) {
+          dot();
         }
         display.textContent += key;
       } else if (e.target.classList.contains('operator')) {
@@ -69,6 +92,7 @@ btns.forEach((btn) =>
         setOperator();
       } else if (e.target.classList.contains('delete')) {
         del();
+        startOperand = false;
       }
     } else if (!operand2) {
       if (e.target.classList.contains('digit')) {
@@ -78,9 +102,11 @@ btns.forEach((btn) =>
         }
         display.textContent += key;
       } else if (e.target.classList.contains('equals')) {
-        setOperand2();
-        display.textContent = operate(operator, operand1, operand2);
-        init();
+        if (!result) {
+          setOperand2();
+          result = operate(operator, operand1, operand2);
+          display.textContent = result;
+        }
       } else if (e.target.classList.contains('delete')) {
         del();
       }
